@@ -1,0 +1,18 @@
+# --- Environment & Credentials ---
+.env                    # Sensitive DB credentials (MUST BE IGNORED)
+.vscode/                # Local editor settings
+
+# --- Python Environment ---
+venv/                   # Virtual environment (huge folder, keep it local)
+__pycache__/            # Python execution cache
+*.pyc                   # Compiled Python files
+
+# --- Data & Logs (Local Artifacts) ---
+sources/source_master.csv   # Local master file used for simulation
+output/logs/*.log           # All pipeline logs
+employee_lifecycle_pipeline.log
+silver.csv                  # Temporary CSV files
+
+# --- System Files ---
+.DS_Store               # Mac system junk
+Thumbs.db               # Windows system junk
