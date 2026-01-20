@@ -32,6 +32,22 @@
 └── README.md                       # Project documentation
 ```
 
+## Architecture & Data Modeling
+
+The project follows the **Medallion Architecture** to ensure data quality and traceability as it moves through different stages:
+
+| Layer | Table Name | Purpose | Model Type |
+| :--- | :--- | :--- | :--- |
+| **Bronze** | `raw_employees` | Initial ingestion of raw CSV data  | Source (Raw) |
+| **Silver** | `dim_employees` | Cleaned, validated, and de-duplicated data  | Dimension |
+| **Gold** | `fact_salary_analytics` | Aggregated business KPIs (Dept costs, hiring trends)  | Fact |
+
+### CDC & Simulation Logic
+Unlike static pipelines, this system identifies changes between the incoming data and the existing database:
+- **New Records:** Automatically identified and inserted into the system.
+- **Updates:** Tracks changes in employee details (e.g., department changes) and updates the Silver layer accordingly.
+- **Dirty Data Simulation:** Includes a custom script to generate synthetic "dirty" data to test ETL robustness against edge cases.
+
 ## 1) Summary
 
 **Employee Lifecycle ETL Automation** is a production-grade data engineering pipeline designed to orchestrate the end-to-end lifecycle of employee records. The project implements a modern **Medallion Architecture** on a PostgreSQL environment, transforming volatile raw inputs into reliable, analytics-ready datasets.
@@ -43,3 +59,51 @@
 * **Data Quality & Stress Testing:** Includes a dedicated simulation engine to generate "dirty" datasets, testing the pipeline's resilience against real-world data anomalies and edge cases.
 * **Industrial Logging:** Implements a comprehensive logging system for full observability, tracking every stage of the ETL process for auditing and debugging.
 
+## 3) How to Run
+
+### Prerequisites
+Docker & Docker Compose: For PostgreSQL orchestration.
+
+Python 3.x: To execute ETL scripts.
+
+Python Libraries: (Installed via requirements.txt)
+
+- pandas: For data manipulation and CSV processing.
+
+- psycopg2-binary: For PostgreSQL database connectivity.
+
+- python-dotenv: For managing environment variables.
+
+### Infrastructure Setup
+
+Spin up the PostgreSQL instance on port 5433:
+```bash
+docker-compose up -d
+```
+
+### Environment Configuration
+
+Rename .env.example to .env and provide your credentials:
+```bash
+cp .env.example .env
+```
+
+### Install Dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+### Execute the Pipeline
+
+Run the main orchestrator to trigger the full flow:
+```bash
+python employee_lifecycle.py
+```
+
+## 4)Test Safely
+The project is designed with a "Safe-to-Test" mindset:
+
+- Containerized DB: No changes are made to your local machine; everything stays inside Docker.
+
+- Dry Run Logic: The simulation scripts allow you to see how CDC reacts to changes before moving to production-scale data.
