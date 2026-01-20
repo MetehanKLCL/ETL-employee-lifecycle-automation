@@ -34,6 +34,8 @@
 
 ## Architecture & Data Modeling
 
+![Architecture Diagram](assets/architecture_diagram.jpg)
+
 The project follows the **Medallion Architecture** to ensure data quality and traceability as it moves through different stages:
 
 | Layer | Table Name | Purpose | Model Type |
