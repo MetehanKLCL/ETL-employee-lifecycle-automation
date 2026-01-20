@@ -59,7 +59,7 @@ Unlike static pipelines, this system identifies changes between the incoming dat
 * **Data Quality & Stress Testing:** Includes a dedicated simulation engine to generate "dirty" datasets, testing the pipeline's resilience against real-world data anomalies and edge cases.
 * **Industrial Logging:** Implements a comprehensive logging system for full observability, tracking every stage of the ETL process for auditing and debugging.
 
-## 3) How to Run
+## 2) How to Run
 
 ### Prerequisites
 Docker & Docker Compose: For PostgreSQL orchestration.
@@ -101,7 +101,7 @@ Run the main orchestrator to trigger the full flow:
 python employee_lifecycle.py
 ```
 
-## 4)Test Safely
+## 3) Test Safely
 The project is designed with a "Safe-to-Test" mindset:
 
 - Containerized DB: No changes are made to your local machine; everything stays inside Docker.
